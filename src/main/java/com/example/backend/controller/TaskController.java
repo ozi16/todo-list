@@ -6,19 +6,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+// inicontroller
 @RequestMapping("/api/")
 @RestController
 public class TaskController {
 
     private final TaskRepository taskRepository;
-    public TaskController(TaskRepository taskRepository){
-        this.taskRepository=taskRepository;
+
+    public TaskController(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
+
     @GetMapping
-        public List<Task> getAllTask(){
-            return taskRepository.findAll();
-        }
+    public List<Task> getAllTask() {
+        return taskRepository.findAll();
+    }
 
     @GetMapping("/{id}")
     public Task getTaskById(@PathVariable int id) {
@@ -27,13 +29,14 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createAllTask(@RequestBody Task task){
+    public Task createAllTask(@RequestBody Task task) {
         return taskRepository.save(task);
 
     }
+
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable int id, @RequestBody Task sentTaskByUser){
-        Task task= taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Gak nemu Task yee"));
+    public Task updateTask(@PathVariable int id, @RequestBody Task sentTaskByUser) {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Gak nemu Task yee"));
         task.setTitle(sentTaskByUser.getTitle());
         task.setDeskripsi(sentTaskByUser.getDeskripsi());
         task.setStatus(sentTaskByUser.isStatus());
@@ -41,8 +44,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable int id){
+    public void deleteTask(@PathVariable int id) {
         taskRepository.deleteById(id);
     }
-    }
-
+}
